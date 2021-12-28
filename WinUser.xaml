@@ -1,0 +1,63 @@
+﻿<Window x:Class="Praktika.WinUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Praktika"
+        mc:Ignorable="d"
+        Title="WinUser" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ToolBar Height="30" VerticalAlignment="Top" Grid.ColumnSpan="3">
+            <ToggleButton x:Name="TBExit" Content="Exit">
+            </ToggleButton>
+            <Separator></Separator>
+        </ToolBar>
+        <TextBlock Name="TBName"  Grid.Row="1" VerticalAlignment="Center" ></TextBlock>
+        <TextBlock Name="TBTime" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" ></TextBlock>
+        <TextBlock Name="TBCrash" Grid.Row="2" Grid.Column="2"  ></TextBlock>
+        <DataGrid Name="DGLogControl" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="False" ColumnWidth="*" >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsNotReason}" Value="false">
+                        <Setter Property="Background" Value="Red"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:MM/dd/yyyy} - {1:MM/dd/yyyy}">
+                                        <Binding Path="loginTime"></Binding>
+                                        <Binding Path="loginTime"></Binding>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Login time" Binding="{Binding loginTime, StringFormat=hh:mm}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Logout time" Binding="{Binding logoutTime, StringFormat=hh:mm, TargetNullValue=**}"></DataGridTextColumn>
+                <DataGridTextColumn Header="TIme spent on system" Binding="{Binding TimeSpent, StringFormat=hh\\:mm\\:ss,TargetNullValue=**}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Unseccessfull logout reasonn" Binding="{Binding reason}"></DataGridTextColumn>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
